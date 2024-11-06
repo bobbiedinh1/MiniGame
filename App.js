@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import StartGameScreen from "./screens/StartGameScreen";
@@ -8,6 +8,10 @@ import StartGameScreen from "./screens/StartGameScreen";
 export default function App() {
 
   const [pickedNumber, setPickedNumber] = useState();
+
+  useEffect(()=> {
+    console.log(pickedNumber);
+  }, [pickedNumber])
 
   const addPickedNumber = (num) => {
     setPickedNumber(num);

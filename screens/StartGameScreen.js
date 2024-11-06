@@ -1,23 +1,36 @@
 import { useState } from "react";
-import { StyleSheet, View, Pressable, Text, TextInput } from "react-native";
+import { StyleSheet, View, Pressable, Text, TextInput, TextBase } from "react-native";
 
 const StartGameScreen = (props) => {
-  
-    
-
-    const showAlert = (num) => {
-    if (num > 100 || num < 1 || isNaN(num) || !Number.isInteger(num)) {
-      alert("error");
-    }
-  };
+  const [textInput, setTextInput] = useState("");
 
   const textInputHandler = (text) => {
-    showAlert(text);
+    setTextInput(text);
+  }
+
+  const continueHandler = (num) => {
+    num = Number(num);
+    if (num > 100 || num < 1 || isNaN(num) || !Number.isInteger(num)) {
+      alert("error");
+      resetHandler();
+    } else {
+      alert("gj");
+      props.setPickedNumber(num);
+    }
+  }
+
+  const resetHandler = () => {
+    setTextInput("");
   }
 
   return (
     <View style={styles.container}>
-      <TextInput placeholder="Enter a number" />
+      <TextInput
+        style={styles.textInputView}
+        onChangeText={textInputHandler}
+        value={textInput}
+        maxLength={3}
+      />
       <View style={styles.buttonContainer}>
         <View style={styles.buttonView}>
           <Pressable styles={styles.buttons}>
@@ -25,7 +38,10 @@ const StartGameScreen = (props) => {
           </Pressable>
         </View>
         <View style={styles.buttonView}>
-          <Pressable styles={styles.buttons}>
+          <Pressable
+            styles={styles.buttons}
+            onPress={continueHandler.bind(this, textInput)}
+          >
             <Text>Continue</Text>
           </Pressable>
         </View>
@@ -42,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 30,
-    gap: 10
+    gap: 10,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -54,7 +70,12 @@ const styles = StyleSheet.create({
   buttonView: {
     flex: 1,
     borderRadius: 25,
-    backgroundColor: 'white',
-    alignItems: 'center'
+    backgroundColor: "white",
+    alignItems: "center",
   },
+  textInputView: {
+    textAlign: 'center',
+    borderBottomWidth: 1,
+    margin: 10
+  }
 });

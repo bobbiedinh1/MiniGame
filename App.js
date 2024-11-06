@@ -2,26 +2,18 @@ import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import GameStartScreen from "./screens/GameStartScreen";
-import GameScreen from "./screens/GameScreen";
+import StartGameScreen from "./screens/StartGameScreen";
+
 
 export default function App() {
 
-  const [number, setNumber] = useState();
+  const [pickedNumber, setPickedNumber] = useState();
 
-  const addNumber = (num) => {
-    setNumber(num);
+  const addPickedNumber = (num) => {
+    setPickedNumber(num);
   }
 
-  let screen = (<GameStartScreen addNumber={addNumber}/>);
-
-  if (number === undefined) {
-    console.log(number);
-  } else if (!isNaN(number) && (Number.isInteger(Number(number))) && Number(number) !== 0 ) {
-    screen = (<GameScreen pickedNumber={number}/>);
-  } else {
-    console.log(number);
-  }
+  let screen = (<StartGameScreen setPickedNumber={setPickedNumber} pickedNumber={pickedNumber} />);
 
   return (
     <SafeAreaProvider>
@@ -42,8 +34,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "green",
   },
 });

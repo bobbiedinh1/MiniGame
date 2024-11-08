@@ -13,21 +13,6 @@ export default function App() {
   const [guessedNumber, setGuessNumber] = useState();
   const [guessedNumberList, setGuessedNumberList] = useState([]);
 
-  useEffect(()=> {
-    console.log(pickedNumber);
-
-  }, [pickedNumber]);
-
-  useEffect(()=> {
-    console.log(guessedNumber);
-
-  }, [guessedNumber]);
-
-  useEffect(()=> {
-    console.log(guessedNumberList);
-
-  }, [guessedNumberList]);
-
   const addPickedNumber = (num) => {
     setPickedNumber(num);
     addGuessedNumber(min=1, max=100);
@@ -39,7 +24,6 @@ export default function App() {
     setGuessedNumberList((prevNumbers) => [
       ...prevNumbers, num
     ]);
-    console.log(num);
   }
 
   const resetGame = () => {
@@ -51,14 +35,11 @@ export default function App() {
   let screen = (<StartGameScreen addPickedNumber={addPickedNumber} pickedNumber={pickedNumber} />);
 
   if (!guessedNumber){
-    console.log("1");
     screen = (<StartGameScreen addPickedNumber={addPickedNumber} pickedNumber={pickedNumber} />);
   }
   else if (guessedNumber === pickedNumber) {
-    console.log("2");
     screen = (<EndGameScreen guessedNumberList={guessedNumberList} resetGame={resetGame}/>);
   } else {
-    console.log("3");
     screen = (<GameScreen guessedNumber={guessedNumber} addGuessedNumber={addGuessedNumber} guessedNumberList={guessedNumberList} pickedNumber={pickedNumber}/>);
   }
 

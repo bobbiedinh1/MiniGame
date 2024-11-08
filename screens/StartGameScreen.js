@@ -1,27 +1,34 @@
 import { useState } from "react";
-import { StyleSheet, View, Pressable, Text, TextInput, TextBase } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Pressable,
+  Text,
+  TextInput,
+  TextBase,
+  Alert,
+} from "react-native";
 
 const StartGameScreen = (props) => {
   const [textInput, setTextInput] = useState("");
 
   const textInputHandler = (text) => {
     setTextInput(text);
-  }
+  };
 
-  const continueHandler = (num) => {
-    num = Number(num);
+  const continueHandler = () => {
+    num = Number(textInput);
     if (num > 100 || num < 1 || isNaN(num) || !Number.isInteger(num)) {
-      alert("error");
+      Alert.alert("Invalid Number", "Please enter a whole number before 1-100.", [{text: 'Okay', style: 'destructive', onPress: resetHandler}])
       resetHandler();
     } else {
-      alert("gj");
-      props.setPickedNumber(num);
+      props.addPickedNumber(num);
     }
-  }
+  };
 
   const resetHandler = () => {
     setTextInput("");
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -33,15 +40,12 @@ const StartGameScreen = (props) => {
       />
       <View style={styles.buttonContainer}>
         <View style={styles.buttonView}>
-          <Pressable styles={styles.buttons}>
+          <Pressable styles={styles.buttons} onPress={resetHandler}>
             <Text>Reset</Text>
           </Pressable>
         </View>
         <View style={styles.buttonView}>
-          <Pressable
-            styles={styles.buttons}
-            onPress={continueHandler.bind(this, textInput)}
-          >
+          <Pressable styles={styles.buttons} onPress={continueHandler}>
             <Text>Continue</Text>
           </Pressable>
         </View>
@@ -74,8 +78,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textInputView: {
-    textAlign: 'center',
+    textAlign: "center",
     borderBottomWidth: 1,
-    margin: 10
-  }
+    margin: 10,
+  },
 });
